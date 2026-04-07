@@ -8,6 +8,7 @@ import Home from './routes/Home/index.tsx'
 import Produtos from './routes/Produtos/index.tsx'
 import EditarProdutos from './routes/EditarProdutos/index.tsx'
 import Error from './routes/Error/index.tsx'
+import "./globals.css"
 
 //Criando um pool de rotas:
 const router = createBrowserRouter([{
