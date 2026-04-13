@@ -1,28 +1,61 @@
 import { useEffect, useState } from "react"
 import { listaProdutos } from "../../data/listaProdutos";
+import type { TipoProduto } from "../../types/tipoProduto";
+import { Link } from "react-router-dom";
 
 export default function Produtos() {
 
-useEffect(() => {
-    console.log("CARREGADO");
-  });
+  const [produtos, setProdutos] = useState<TipoProduto[]>();
 
   useEffect(() => {
-    listaProdutos.forEach(p=> console.log("PRODUTO : " + p.nome));
+
+    const lista = async ()=>{ 
+      await setProdutos(listaProdutos);
+    }
+    lista();
+
   },[]);
 
-  const [contador, setContador] = useState(0)
-
-  useEffect(()=>(
-    console.log(`CONTADOR : ${contador}`)
-  ),[contador]);
   
   return (
     <main>
       <h1>Produtos</h1>
+
       <div>
-        <button onClick={()=> setContador(contador + 1)}>EXECUTE</button>
+        <table className="tabelaProd">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NOME</th>
+              <th>PREÇO</th>
+              <th>EDITAR/EXCLUIR</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              produtos?.map((p)=>(
+                <tr key={p.id}>
+                  <td>{p.id}</td>
+                  <td>{p.nome}</td>
+                  <td>{p.preco}</td>
+                  <td><Link to={`/editar-produtos/${p.preco}`}>EDITAR</Link>  </td>
+                </tr>
+              ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>
+                Quantidade de produtos : {produtos?.length}
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
+
+
     </main>
   )
 }
